@@ -10,8 +10,19 @@
         "preview": "vite preview"
     },
     "dependencies": {
+        "@metamask/sdk-react": "^0.14.2",
+        "@metamask/sdk-react-ui": "^0.14.3",
+        "@web3-react/core": "^8.2.3",
+        "@web3-react/eip1193": "^8.2.3",
+        "@web3-react/metamask": "^8.2.4",
+        "@web3-react/network": "^8.2.3",
+        "@web3-react/store": "^8.2.3",
+        "@web3-react/types": "^8.2.3",
+        "@web3-react/url": "^8.2.3",
         "react": "^18.2.0",
-        "react-dom": "^18.2.0"
+        "react-dom": "^18.2.0",
+        "web3": "^4.4.0",
+        "web3-react": "^5.0.5"
     },
     "devDependencies": {
         "@nomicfoundation/hardhat-toolbox": "^4.0.0",

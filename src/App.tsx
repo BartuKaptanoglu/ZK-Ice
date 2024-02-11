@@ -1,35 +1,47 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { MetaMaskButton, useAccount, useSDK, useSignMessage} from '@metamask/sdk-react-ui';
+import './App.css';
 
-function App() {
-  const [count, setCount] = useState(0)
+function AppReady() {
+  const {
+    data: signData,
+    isError: isSignError,
+    isLoading: isSignLoading,
+    isSuccess: isSignSuccess,
+    signMessage,
+  } = useSignMessage({
+    message: 'gm wagmi frens',
+  });
+
+  const { isConnected } = useAccount();
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="App">
+      <header className="App-header">
+        <MetaMaskButton theme={'light'} color="white"></MetaMaskButton>
+        {isConnected && (
+          <>
+            <div style={{ marginTop: 20 }}>
+              <button disabled={isSignLoading} onClick={() => signMessage()}>
+                Sign message
+              </button>
+              {isSignSuccess && <div>Signature: {signData}</div>}
+              {isSignError && <div>Error signing message</div>}
+            </div>
+          </>
+        )}
+      </header>
+    </div>
+  );
 }
 
-export default App
+function App() {
+  const { ready } = useSDK();
+
+  if (!ready) {
+    return <div>Loading...</div>;
+  }
+
+  return <AppReady />;
+}
+
+export default App;
