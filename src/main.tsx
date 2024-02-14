@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from "/Users/bartukaptanoglu/ZK-Ice/src/App.tsx"
+import App from "./App.tsx"
 import { MetaMaskUIProvider } from '@metamask/sdk-react-ui';
 
 const root = ReactDOM.createRoot(
