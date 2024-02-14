@@ -10,5 +10,51 @@
     <h1>liseli yarram</h1>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-  </body>
+     <h1>DAO Proposal Voting</h1>
+    <div id="proposals"></div>
+    <button onclick="createProposal()">Create Proposal</button>
+
+    <script>
+        let proposals = [];
+        let id = 0;
+
+        function createProposal() {
+            const proposalBody = prompt("What is your proposal?");
+            if (proposalBody) {
+                const newProposal = {
+                    id: id++,
+                    body: proposalBody,
+                    votes: 0
+                };
+                proposals.push(newProposal);
+                renderProposals();
+            }
+        }
+
+        function voteOnProposal(proposalId, vote) {
+            const proposal = proposals.find(p => p.id === proposalId);
+            if (proposal) {
+                proposal.votes += vote;
+                renderProposals();
+            }
+        }
+
+        function renderProposals() {
+            const proposalsElement = document.getElementById('proposals');
+            proposalsElement.innerHTML = ''; // Clear existing proposals
+            proposals.forEach(proposal => {
+                const proposalElement = document.createElement('div');
+                proposalElement.innerHTML = `
+                    <p>${proposal.body} - Votes: ${proposal.votes}</p>
+                    <button onclick="voteOnProposal(${proposal.id}, 1)">Vote Yes</button>
+                    <button onclick="voteOnProposal(${proposal.id}, -1)">Vote No</button>
+                `;
+                proposalsElement.appendChild(proposalElement);
+            });
+        }
+
+        renderProposals();
+    </script>
+</body>
 </html>
+

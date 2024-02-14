@@ -1,52 +1,60 @@
+import React, { useState } from 'react';
 import { MetaMaskButton, useAccount, useSDK, useSignMessage} from '@metamask/sdk-react-ui';
 import './App.css';
 
-
-//private RPC endpoint 
-///const web3 = new Web3('https://sepolia-rpc.scroll.io/'); 
-
-///const address = '0x...';
-//const contract = new Contract(abi, address, { provider: "https://sepolia-rpc.scroll.io/"}); 
-
 function AppReady() {
+  const [inputValue, setInputValue] = useState('');
   const {
     data: signData,
     isError: isSignError,
-    isLoading: isSignLoading,
     isSuccess: isSignSuccess,
-    signMessage,
   } = useSignMessage({
     message: 'gm wagmi frens',
   });
-
+  let proposals = [];
+  let id = 0;
+  
   const { isConnected } = useAccount();
 
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(event.target.value);
+  };
+
+  const handleSeparateButtonClick = () => {
+    // Implement separate button functionality here
+    alert('Separate button clicked');
+  };
+
   return (
-    
     <div className="App">
+      <button onClick={handleSeparateButtonClick}>
+                Separate Button
+              </button>
       <header className="App-header">
         <MetaMaskButton theme={'light'} color="white"></MetaMaskButton>
         {isConnected && (
           <>
             <div style={{ marginTop: 20 }}>
-              <button disabled={isSignLoading} onClick={() => signMessage()}>
-                Sign message
-              </button>
+              <input
+                type="text"
+                value={inputValue}
+                onChange={handleInputChange}
+                placeholder="Enter message"
+              />
+              
               {isSignSuccess && <div>Signature: {signData}</div>}
               {isSignError && <div>Error signing message</div>}
             </div>
+        
           </>
         )}
       </header>
-      <h1 className="text-3xl font-bold underline blue">
-      Hello world!
-    </h1>
+      
     </div>
   );
 }
 
 const App: React.FC = () => {
-
   const { ready } = useSDK();
 
   if (!ready) {
