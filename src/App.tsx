@@ -1,6 +1,13 @@
 import { MetaMaskButton, useAccount, useSDK, useSignMessage} from '@metamask/sdk-react-ui';
 import './App.css';
 
+
+//private RPC endpoint 
+///const web3 = new Web3('https://sepolia-rpc.scroll.io/'); 
+
+///const address = '0x...';
+//const contract = new Contract(abi, address, { provider: "https://sepolia-rpc.scroll.io/"}); 
+
 function AppReady() {
   const {
     data: signData,
@@ -15,6 +22,7 @@ function AppReady() {
   const { isConnected } = useAccount();
 
   return (
+    
     <div className="App">
       <header className="App-header">
         <MetaMaskButton theme={'light'} color="white"></MetaMaskButton>
@@ -30,11 +38,15 @@ function AppReady() {
           </>
         )}
       </header>
+      <h1 className="text-3xl font-bold underline blue">
+      Hello world!
+    </h1>
     </div>
   );
 }
 
-function App() {
+const App: React.FC = () => {
+
   const { ready } = useSDK();
 
   if (!ready) {
